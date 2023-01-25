@@ -28,8 +28,8 @@ public class Piece : MonoBehaviour
 		SetPosition(argIndex);
 	}
 
-	private Vector2 Select()
+	public Vector2 Select()
 	{
-		return Utillity.Index2Coordinate(this.gameObject.transform.position);
+		return Utillity.Coordinate2Index(this.gameObject.transform.position);
 	}
 }
