@@ -91,7 +91,7 @@ public class BoardManagement : MonoBehaviour
 					GameObject piece = Instantiate(Constants.PieceDictionary.RANK[board[y, x].Substring(1, 1)]);
 					piece.GetComponent<Piece>().Init(
 							Constants.PieceDictionary.COLOR[board[y, x].Substring(0, 1)],
-							new Vector2(x, y)
+							new Vector2Int(x, y)
 						);
 				}
 			}
