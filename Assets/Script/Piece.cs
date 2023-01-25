@@ -27,4 +27,9 @@ public class Piece : MonoBehaviour
 		this.gameObject.GetComponent<Renderer>().material.color = argColor;
 		SetPosition(argIndex);
 	}
+
+	private Vector2 Select()
+	{
+		return Utillity.Index2Coordinate(this.gameObject.transform.position);
+	}
 }
