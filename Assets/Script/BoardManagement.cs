@@ -88,6 +88,7 @@ public class BoardManagement : MonoBehaviour
 			for (int x = 0; x < board.GetLength(1); x++)
 			{
 				if(board[y,x].Substring(1,2) != Constants.Pieces.SPACE + Constants.Pieces.SPACE){
+
 					GameObject piece = Instantiate(Constants.PieceDictionary.RANK[board[y, x].Substring(1, 1)]);
 					piece.GetComponent<Piece>().Init(
 							Constants.PieceDictionary.COLOR[board[y, x].Substring(0, 1)],

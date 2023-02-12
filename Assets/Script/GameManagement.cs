@@ -20,8 +20,8 @@ public class GameManagement : MonoBehaviour
 			if(Physics.Raycast(ray, out RaycastHit hitInfo))
 			{
 				Vector2Int index = hitInfo.collider.gameObject.GetComponent<Piece>().Select();
-
-				Debug.Log(index);
+				Vector3 coordinate = hitInfo.collider.transform.position;
+				Debug.Log(index.ToString()+":"+coordinate.ToString());
 			}
 		}
 	}
