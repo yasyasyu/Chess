@@ -15,9 +15,9 @@ public class Utility : MonoBehaviour
 	public static Vector3 Index2Coordinate(Vector2Int index)
 	{
 		return new Vector3(
-			scale*(-3.5f + index.x),
+			 scale*(-3.5f + index.x),
 			coordinateY,
-			-(scale*(-3.5f + index.y))
+			-scale*(-3.5f + index.y)
 		);
 	}
 
