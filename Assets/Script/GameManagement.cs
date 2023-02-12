@@ -21,7 +21,7 @@ public class GameManagement : MonoBehaviour
 			{
 				Vector2Int index = hitInfo.collider.gameObject.GetComponent<Piece>().Select();
 				Vector3 coordinate = hitInfo.collider.transform.position;
-				Debug.Log(index.ToString()+":"+coordinate.ToString());
+				Debug.Log("GM"+index.ToString()+":"+coordinate.ToString());
 			}
 		}
 	}
