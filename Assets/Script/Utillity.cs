@@ -29,8 +29,8 @@ public class Utility : MonoBehaviour
 	public static Vector2Int Coordinate2Index(Vector3 coordinate)
 	{
 		return new Vector2Int(
-			(int)((int)( coordinate.x/scale) +3.5f ),
-			(int)((int)(-coordinate.z/scale) +3.5f )
+			(int)( coordinate.x/scale +3.5f ),
+			(int)(-coordinate.z/scale +3.5f )
 		);
 	}
 }
