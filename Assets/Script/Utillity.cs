@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Utility : MonoBehaviour
 {
-	private static readonly float scale = 1f;
+	private static readonly float scale = 2f;
 	private static readonly float coordinateY = 0.5f;
 
 	/// <summary>

@@ -19,7 +19,7 @@ public class Piece : MonoBehaviour
 
 	void SetPosition(Vector2Int argIndex){
 		transform.position = Utility.Index2Coordinate(argIndex);
-		Debug.Log("SP"+argIndex.ToString() + "|" + Utility.Coordinate2Index(this.gameObject.transform.position));
+		//Debug.Log("SP"+argIndex.ToString() + "|" + Utility.Coordinate2Index(this.gameObject.transform.position));
 	}
 
 	public void Init(Color argColor, Vector2Int argIndex)
