@@ -40,12 +40,15 @@ public class Constants : MonoBehaviour
 		public static readonly GameObject KNIGHT = Resources.Load("Knight") as GameObject;
 		//P É|Å[Éì
 		public static readonly GameObject PAWN = Resources.Load("Pawn") as GameObject;
-
+	}
+	public static class PieceColor
+	{
 		//çï
 		public static readonly Color BLACK = Color.black;
 		//îí
 		public static readonly Color WHITE = Color.white;
 	}
+
 	public static class PieceDictionary
 	{
 		public static readonly Dictionary<string, GameObject> RANK = new Dictionary<string, GameObject>()
@@ -59,8 +62,8 @@ public class Constants : MonoBehaviour
 		};
 		public static readonly Dictionary<string, Color> COLOR = new Dictionary<string, Color>()
 		{
-			{Pieces.BLACK, PieceObject.BLACK},
-			{Pieces.WHITE, PieceObject.WHITE},
+			{Pieces.BLACK, PieceColor.BLACK},
+			{Pieces.WHITE, PieceColor.WHITE},
 		};
 	}
 }

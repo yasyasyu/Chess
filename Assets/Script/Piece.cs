@@ -17,14 +17,19 @@ public class Piece : MonoBehaviour
 		
 	}
 
-	void SetPosition(Vector2 argIndex){
-		transform.position = Utillity.Index2Coordinate(argIndex);
-		//Debug.Log(index.ToString() + "|" + Utillity.Coordinate2Index(this.gameObject.transform.position));
+	void SetPosition(Vector2Int argIndex){
+		transform.position = Utility.Index2Coordinate(argIndex);
+		//Debug.Log("SP"+argIndex.ToString() + "|" + Utility.Coordinate2Index(this.gameObject.transform.position));
 	}
 
-	public void Init(Color argColor, Vector2 argIndex)
+	public void Init(Color argColor, Vector2Int argIndex)
 	{
 		this.gameObject.GetComponent<Renderer>().material.color = argColor;
 		SetPosition(argIndex);
+	}
+
+	public Vector2Int Select()
+	{
+		return Utility.Coordinate2Index(this.gameObject.transform.position);
 	}
 }
