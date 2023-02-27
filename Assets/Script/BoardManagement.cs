@@ -73,7 +73,7 @@ public class BoardManagement : MonoBehaviour
 					piece = color + Constants.Pieces.PAWN + (x + 1).ToString();
 				}
 				else {
-					piece = color + Constants.Pieces.SPACE + Constants.Pieces.SPACE;
+					piece = Constants.Pieces.SPACE + Constants.Pieces.SPACE + Constants.Pieces.SPACE;
 				}
 
 				board[y,x] = piece;
@@ -87,14 +87,26 @@ public class BoardManagement : MonoBehaviour
 		{
 			for (int x = 0; x < board.GetLength(1); x++)
 			{
-				if(board[y,x].Substring(1,2) != Constants.Pieces.SPACE + Constants.Pieces.SPACE){
+				//コマの種類
+				GameObject piece = Instantiate(Constants.PieceDictionary.RANK[board[y, x].Substring(1, 1)]);
 
-					GameObject piece = Instantiate(Constants.PieceDictionary.RANK[board[y, x].Substring(1, 1)]);
+				GameObject tile = Instantiate(Constants.PieceObject.Tile);
+
+				if (board[y, x].Substring(1, 1) == Constants.Pieces.SPACE)
+				{
 					piece.GetComponent<Piece>().Init(
-							Constants.PieceDictionary.COLOR[board[y, x].Substring(0, 1)],
 							new Vector2Int(x, y)
 						);
 				}
+				else
+				{
+					piece.GetComponent<Piece>().Init(
+						//コマの色
+						Constants.PieceDictionary.COLOR[board[y, x].Substring(0, 1)],
+						new Vector2Int(x, y)
+					);
+				}
+				tile.GetComponent<Tile>().Init(new Vector2Int(x, y));
 			}
 		}
 	}
@@ -109,5 +121,9 @@ public class BoardManagement : MonoBehaviour
 			}
 			Debug.Log(printString);
 		}
+	}
+	public bool Check()
+	{
+		return true;
 	}
 }
