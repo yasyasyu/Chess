@@ -20,7 +20,7 @@ public class BoardManagement : MonoBehaviour
 	void Start()
 	{
 		Init();
-		BoardPrint();
+		//BoardPrint();
 		GeneratePiece();
 	}
 
@@ -122,8 +122,20 @@ public class BoardManagement : MonoBehaviour
 			Debug.Log(printString);
 		}
 	}
-	public bool Check()
+	public bool Check(int player, Vector2Int index)
 	{
-		return true;
+		string piece = board[index.y, index.x];
+		if (player == 0 && piece.Substring(0, 1) == Constants.Pieces.WHITE)
+		{
+			return true;
+		}
+		else if (player == 1 && piece.Substring(0, 1) == Constants.Pieces.BLACK)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 }
