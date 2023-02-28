@@ -28,6 +28,11 @@ public class Piece : MonoBehaviour
 		SetPosition(argIndex);
 	}
 
+	public void Init(Vector2Int argIndex)
+	{
+		SetPosition(argIndex);
+	}
+
 	public Vector2Int Select()
 	{
 		return Utility.Coordinate2Index(this.gameObject.transform.position);

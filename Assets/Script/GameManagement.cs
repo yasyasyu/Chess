@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GameManagement : MonoBehaviour
 {
+	private BoardManagement boardManagement;
 	// Start is called before the first frame update
 	void Start()
 	{
-		
+		//boardManagement = 
 	}
 
 	// Update is called once per frame
@@ -22,6 +23,7 @@ public class GameManagement : MonoBehaviour
 				Vector2Int index = hitInfo.collider.gameObject.GetComponent<Piece>().Select();
 				Vector3 coordinate = hitInfo.collider.transform.position;
 				Debug.Log("GM"+index.ToString()+":"+coordinate.ToString());
+				//boardManagement.Check();
 			}
 		}
 	}

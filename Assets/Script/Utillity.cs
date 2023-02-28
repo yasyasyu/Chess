@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Utility : MonoBehaviour
 {
-	private static readonly float scale = 2f;
+	public static readonly float scale = 2f ;
 	private static readonly float coordinateY = 0.5f;
 
 	/// <summary>
@@ -29,8 +29,8 @@ public class Utility : MonoBehaviour
 	public static Vector2Int Coordinate2Index(Vector3 coordinate)
 	{
 		return new Vector2Int(
-			(int)( coordinate.x/scale +3.5f ),
-			(int)(-coordinate.z/scale +3.5f )
+			(int)((( coordinate.x/scale +3.5f)*100+0.5) / 100),
+			(int)(((-coordinate.z/scale +3.5f)*100+0.5) / 100)
 		);
 	}
 }
