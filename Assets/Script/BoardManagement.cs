@@ -21,7 +21,7 @@ public class BoardManagement : MonoBehaviour
 	{
 		Init();
 		BoardPrint();
-		generatePiece();
+		GeneratePiece();
 	}
 
 	// Update is called once per frame
@@ -81,7 +81,7 @@ public class BoardManagement : MonoBehaviour
 		}
 	}
 
-	void generatePiece()
+	void GeneratePiece()
 	{
 		for (int y = 0; y < board.GetLength(0); y++)
 		{
