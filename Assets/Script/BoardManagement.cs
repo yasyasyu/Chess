@@ -122,20 +122,103 @@ public class BoardManagement : MonoBehaviour
 			Debug.Log(printString);
 		}
 	}
+
+	private bool CheckKing(Vector2Int frm, Vector2Int to)
+	{
+		// ###
+		// #@#
+		// ###
+		for (int di = -1; di <= 1; di++)
+		{
+			for (int dj = -1; dj <= 1; dj++)
+			{
+				if (frm + new Vector2Int(di, dj) == to)
+				{
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
+	bool Direct(int sign_x, int sign_y, Vector2Int frm, Vector2Int to)
+	{
+		for (int d = 0; d < 8; d++)
+		{
+			Vector2Int movePos = frm + new Vector2Int(sign_x * d, sign_y * d);
+			if (!(0 <= movePos.x && movePos.x < 8 && 0 <= movePos.y && movePos.y < 8))
+			{
+				d = 8;
+				break;
+			}
+
+			if (movePos == to)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	private bool CheckQueen(Vector2Int frm, Vector2Int to)
+	{
+		//#  #  #
+		// # # # 
+		//  ###  
+		//###@###
+		//  ###  
+		// # # # 
+		//#  #  #
+		bool flg = false;
+		flg |= Direct(1, 0, frm, to);
+		flg |= Direct(1, 1, frm, to);
+		Direct(0, 1);
+		Direct(-1, 1);
+		Direct(-1, 0);
+		Direct(-1, -1);
+		Direct(0, -1);
+		Direct(1, -1);
+
+		//for (int direct = 0; direct < 8; direct++)
+		//{
+		//	//direct 0~8
+		//	int radian = direct * 45;
+		//	int sign_x = (int)Mathf.Cos((float)radian);
+		//	int sign_y = (int)Mathf.Sin((float)radian);
+
+
+		//}
+
+		return false;
+	}
+
 	public bool Check(int player, Vector2Int index)
 	{
 		string piece = board[index.y, index.x];
-		if (player == 0 && piece.Substring(0, 1) == Constants.Pieces.WHITE)
-		{
-			return true;
-		}
-		else if (player == 1 && piece.Substring(0, 1) == Constants.Pieces.BLACK)
-		{
-			return true;
-		}
-		else
+		if (
+			!(
+			(player == 1 && piece.Substring(0, 1) == Constants.Pieces.BLACK) ||
+			(player == 0 && piece.Substring(0, 1) == Constants.Pieces.WHITE))
+			)
 		{
 			return false;
+		}
+		switch (piece.Substring(1,1))
+		{
+			case "K":
+				return CheckKing(frm, to);
+			case "Q":
+				return CheckQueen(frm, to);
+			case "R":
+				return CheckKing(frm, to);
+			case "B":
+				return CheckQueen(frm, to);
+			case "N":
+				return CheckKing(frm, to);
+			case "P":
+				return CheckQueen(frm, to);
+
+			default:
+				return false;
 		}
 	}
 }
