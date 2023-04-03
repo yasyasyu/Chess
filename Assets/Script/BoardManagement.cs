@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class BoardManagement : MonoBehaviour
 	void Start()
 	{
 		Init();
-		//BoardPrint();
+		BoardPrint();
 		GeneratePiece();
 	}
 
@@ -123,11 +124,27 @@ public class BoardManagement : MonoBehaviour
 		}
 	}
 
+	public bool PlayerCheck(int player, Vector2Int index)
+	{
+		string piece = board[index.y, index.x];
+		if (
+			!(
+			(player == 1 && piece.Substring(0, 1) == Constants.Pieces.BLACK) ||
+			(player == 0 && piece.Substring(0, 1) == Constants.Pieces.WHITE))
+			)
+		{
+			return false;
+		}
+		return true;
+	}
+
 	private bool CheckKing(Vector2Int frm, Vector2Int to)
 	{
-		// ###
-		// #@#
-		// ###
+		/*
+			###
+			#@#
+			###
+		*/
 		for (int di = -1; di <= 1; di++)
 		{
 			for (int dj = -1; dj <= 1; dj++)
@@ -141,14 +158,14 @@ public class BoardManagement : MonoBehaviour
 
 		return false;
 	}
-	bool Direct(int sign_x, int sign_y, Vector2Int frm, Vector2Int to)
+
+	private bool Direct(int sign_x, int sign_y, Vector2Int frm, Vector2Int to)
 	{
 		for (int d = 0; d < 8; d++)
 		{
 			Vector2Int movePos = frm + new Vector2Int(sign_x * d, sign_y * d);
 			if (!(0 <= movePos.x && movePos.x < 8 && 0 <= movePos.y && movePos.y < 8))
 			{
-				d = 8;
 				break;
 			}
 
@@ -159,49 +176,131 @@ public class BoardManagement : MonoBehaviour
 		}
 		return false;
 	}
+
 	private bool CheckQueen(Vector2Int frm, Vector2Int to)
 	{
-		//#  #  #
-		// # # # 
-		//  ###  
-		//###@###
-		//  ###  
-		// # # # 
-		//#  #  #
+		/*
+			#   #   #
+			 #  #  # 
+			  # # #  
+			   ###   
+			####@####
+			   ###   
+			  # # #  
+			 #  #  # 
+			#   #   #
+		*/
+
 		bool flg = false;
-		flg |= Direct(1, 0, frm, to);
-		flg |= Direct(1, 1, frm, to);
-		Direct(0, 1);
-		Direct(-1, 1);
-		Direct(-1, 0);
-		Direct(-1, -1);
-		Direct(0, -1);
-		Direct(1, -1);
 
-		//for (int direct = 0; direct < 8; direct++)
-		//{
-		//	//direct 0~8
-		//	int radian = direct * 45;
-		//	int sign_x = (int)Mathf.Cos((float)radian);
-		//	int sign_y = (int)Mathf.Sin((float)radian);
+		/*
+			flg |= Direct( 1,  0, frm, to);
+			flg |= Direct( 1,  1, frm, to);
+			flg |= Direct( 0,  1, frm, to);
+			flg |= Direct(-1,  1, frm, to);
+			flg |= Direct(-1,  0, frm, to);
+			flg |= Direct(-1, -1, frm, to);
+			flg |= Direct( 0, -1, frm, to);
+			flg |= Direct( 1, -1, frm, to);
+		*/
 
+		for (int direct = 0; direct < 8; direct++)
+		{
+			//direct 0~7
+			int radian = direct * 45;
+			//Debug.Log(radian);
+			int sign_x = (int)Math.Round(Math.Cos(radian * (Math.PI / 180)));
+			int sign_y = (int)Math.Round(Math.Sin(radian * (Math.PI / 180)));
+			//Debug.Log(sign_x.ToString() + ", " + sign_y.ToString());
+			flg |= Direct(sign_x, sign_y, frm, to);
+		}
 
-		//}
-
-		return false;
+		return flg;
 	}
 
-	public bool Check(int player, Vector2Int index)
+	private bool CheckRook(Vector2Int frm, Vector2Int to)
 	{
-		string piece = board[index.y, index.x];
-		if (
-			!(
-			(player == 1 && piece.Substring(0, 1) == Constants.Pieces.BLACK) ||
-			(player == 0 && piece.Substring(0, 1) == Constants.Pieces.WHITE))
-			)
+		/*
+			    #    
+			    #    
+			    #    
+			    #    
+			####@####
+			    #    
+			    #    
+			    #    
+			    #    
+		*/
+
+		bool flg = false;
+
+		for (int direct = 0; direct < 4; direct++)
 		{
-			return false;
+			//direct 0~7
+			int radian = direct * 90;
+			//Debug.Log(radian);
+			int sign_x = (int)Math.Round(Math.Cos(radian * (Math.PI / 180)));
+			int sign_y = (int)Math.Round(Math.Sin(radian * (Math.PI / 180)));
+			//Debug.Log(sign_x.ToString() + ", " + sign_y.ToString());
+			flg |= Direct(sign_x, sign_y, frm, to);
 		}
+
+		return flg;
+	}
+
+	private bool CheckBishop(Vector2Int frm, Vector2Int to)
+	{
+		/*
+			#       #
+			 #     # 
+			  #   #  
+			   # #   
+			    @    
+			   # #   
+			  #   #  
+			 #     # 
+			#       #
+		*/
+
+		bool flg = false;
+
+		for (int direct = 0; direct < 4; direct++)
+		{
+			//direct 0~7
+			int radian = direct * 90 + 45;
+			//Debug.Log(radian);
+			int sign_x = (int)Math.Round(Math.Cos(radian * (Math.PI / 180)));
+			int sign_y = (int)Math.Round(Math.Sin(radian * (Math.PI / 180)));
+			//Debug.Log(sign_x.ToString() + ", " + sign_y.ToString());
+			flg |= Direct(sign_x, sign_y, frm, to);
+		}
+
+		return flg;
+	}
+
+	private bool CheckKnight(Vector2Int frm, Vector2Int to)
+	{
+		bool flg = true;
+		return flg;
+	}
+	private bool CheckPawn(Vector2Int frm, Vector2Int to)
+	{
+		string color = board[frm.y, frm.x].Substring(0, 1);
+		bool flg = false;
+		int direct = 1;
+		if (color == Constants.Pieces.WHITE)
+		{
+			direct *= -1;
+		}
+		if (frm + new Vector2Int(0, direct) == to)
+		{
+			flg = true;
+		}
+		return flg;
+	}
+	public bool MoveCheck(Vector2Int frm, Vector2Int to)
+	{
+		string piece = board[frm.y, frm.x];
 		switch (piece.Substring(1,1))
 		{
 			case "K":
@@ -209,16 +308,34 @@ public class BoardManagement : MonoBehaviour
 			case "Q":
 				return CheckQueen(frm, to);
 			case "R":
-				return CheckKing(frm, to);
+				return CheckRook(frm, to);
 			case "B":
-				return CheckQueen(frm, to);
+				return CheckBishop(frm, to);
 			case "N":
-				return CheckKing(frm, to);
+				return CheckKnight(frm, to);
 			case "P":
-				return CheckQueen(frm, to);
+				return CheckPawn(frm, to);
 
 			default:
 				return false;
 		}
+	}
+
+	private void ResetPieceObject()
+	{
+		GameObject[] pieces = GameObject.FindGameObjectsWithTag("Piece");
+		foreach (GameObject piece in pieces)
+		{
+			Destroy(piece);
+		}
+	}
+
+	public void Move(Vector2Int frm, Vector2Int to)
+	{
+		ResetPieceObject();
+		board[to.y, to.x] = board[frm.y, frm.x];
+		board[frm.y, frm.x] = Constants.Pieces.SPACE + Constants.Pieces.SPACE + Constants.Pieces.SPACE;
+		BoardPrint();
+		GeneratePiece();
 	}
 }
