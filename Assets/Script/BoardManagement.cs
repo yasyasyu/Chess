@@ -280,11 +280,32 @@ public class BoardManagement : MonoBehaviour
 
 	private bool CheckKnight(Vector2Int frm, Vector2Int to)
 	{
-		bool flg = true;
+		/*
+			 # # 
+			#   #
+			  @  
+			#   #
+			 # # 
+		*/
+
+		bool flg = false;
+
+		for (int dx = 1; dx <=2; dx++)
+		{
+			int dy = 3 - dx;
+			flg |= frm + new Vector2Int( dx, dy) == to;
+			flg |= frm + new Vector2Int(-dx, dy) == to;
+			flg |= frm + new Vector2Int( dx,-dy) == to;
+			flg |= frm + new Vector2Int(-dx,-dy) == to;
+		}
 		return flg;
 	}
 	private bool CheckPawn(Vector2Int frm, Vector2Int to)
 	{
+		/*
+			#	@
+			@	#
+		 */
 		string color = board[frm.y, frm.x].Substring(0, 1);
 		bool flg = false;
 		int direct = 1;
