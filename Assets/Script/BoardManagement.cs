@@ -293,10 +293,30 @@ public class BoardManagement : MonoBehaviour
 		for (int dx = 1; dx <=2; dx++)
 		{
 			int dy = 3 - dx;
-			flg |= frm + new Vector2Int( dx, dy) == to;
-			flg |= frm + new Vector2Int(-dx, dy) == to;
-			flg |= frm + new Vector2Int( dx,-dy) == to;
-			flg |= frm + new Vector2Int(-dx,-dy) == to;
+			//flg |= frm + new Vector2Int( dx, dy) == to;
+			//flg |= frm + new Vector2Int(-dx, dy) == to;
+			//flg |= frm + new Vector2Int( dx,-dy) == to;
+			//flg |= frm + new Vector2Int(-dx,-dy) == to;
+			
+			for (int sign=0; sign < 1<<2; sign++)
+			{
+				int signX = 1, signY = 1;
+				for (int shift=0; shift<2; shift++)
+				{
+					if ((sign >> shift & 1) == 1)
+					{
+						if (shift%2 == 0)
+						{
+							signX = -1;
+						}
+						else
+						{
+							signY = -1;
+						}
+					}
+				}
+				flg |= frm + new Vector2Int(signX * dx, signY * dy) == to;
+			}
 		}
 		return flg;
 	}
