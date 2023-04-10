@@ -36,6 +36,11 @@ public class GameManagement : MonoBehaviour
 						Debug.Log("bad choice PlayerCheck");
 						ResetIndex(0);
 					}
+					else if (!boardManagement.Movable(pieceIndex))
+					{
+						Debug.Log("bad choice Don't Movable");
+						ResetIndex(0);
+					}
 					else
 					{
 						Debug.Log("good choice PlayerCheck");
@@ -44,8 +49,12 @@ public class GameManagement : MonoBehaviour
 				else if(moveIndex == new Vector2Int(-1, -1))
 				{
 					moveIndex = hitInfo.collider.gameObject.GetComponent<Piece>().Select();
-
-					if (!boardManagement.MoveCheck(pieceIndex, moveIndex))
+					if (!boardManagement.SameColorCheck(pieceIndex, moveIndex))
+					{
+						Debug.Log("don't same color choice");
+						ResetIndex(1);
+					}
+					else if (!boardManagement.MoveCheck(pieceIndex, moveIndex))
 					{
 						Debug.Log("bad choice MoveCheck");
 						ResetIndex(1);
