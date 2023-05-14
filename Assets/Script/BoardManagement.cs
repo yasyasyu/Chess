@@ -521,10 +521,11 @@ public class BoardManagement : MonoBehaviour
 			#	@
 			@	#
 		 */
-		string color = board[frm.y, frm.x].Substring(0, 1);
+		string frmColor = GetColor(board[frm.y, frm.x]);
+		
 		bool flg = false;
 		int direct = 1;
-		if (color == Constants.Pieces.WHITE)
+		if (frmColor == Constants.Pieces.WHITE)
 		{
 			direct *= -1;
 		}
@@ -532,6 +533,24 @@ public class BoardManagement : MonoBehaviour
 		{
 			flg = true;
 		}
+
+		// diagonal-move
+		string toColor = GetColor(board[to.y, to.x]);
+
+		if (frmColor == toColor || toColor == Constants.Pieces.SPACE)
+		{
+			return flg;
+		}
+
+		if (frm + new Vector2Int(1, direct) == to)
+		{
+			flg = true;
+		}
+		if (frm + new Vector2Int(-1, direct) == to)
+		{
+			flg = true;
+		}
+
 		return flg;
 	}
 	private bool CheckPawn(Vector2Int frm)
@@ -543,15 +562,34 @@ public class BoardManagement : MonoBehaviour
 
 		bool flg = false;
 		int direct = 1;
-		if (GetColor(board[frm.y, frm.x]) == Constants.Pieces.WHITE)
+		string frmColor = GetColor(board[frm.y, frm.x]);
+		if (frmColor == Constants.Pieces.WHITE)
 		{
 			direct *= -1;
 		}
+
 		Vector2Int to = frm + new Vector2Int(0, direct);
-		if (GetRank(board[to.y, to.x]) == Constants.Pieces.SPACE || GetColor(board[to.y, to.x]) != GetColor(board[frm.y, frm.x]))
+		string toColor = GetColor(board[to.y, to.x]);
+		if (GetRank(board[to.y, to.x]) == Constants.Pieces.SPACE ||frmColor != toColor)
 		{
 			flg = true;
 		}
+
+		// diagonal-move
+		if (frmColor == toColor || toColor == Constants.Pieces.SPACE)
+		{
+			return flg;
+		}
+
+		if (frm + new Vector2Int(1, direct) == to)
+		{
+			flg = true;
+		}
+		if (frm + new Vector2Int(-1, direct) == to)
+		{
+			flg = true;
+		}
+
 		return flg;
 	}
 
