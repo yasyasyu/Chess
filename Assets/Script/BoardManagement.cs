@@ -59,24 +59,15 @@ public class BoardManagement : MonoBehaviour
 						d = 7;
 					}
 
-					string pieceNum = " ";
-					if (x < board.GetLength(1) / 2 - 1)
-					{
-						pieceNum = "1";
-					}
-					else if (board.GetLength(1) / 2 + 1 <= x)
-					{
-						pieceNum = "2";
-					}
-					piece = color + defaultPieces[(int)Mathf.Abs(d - x)] + pieceNum;
+					piece = color + defaultPieces[(int)Mathf.Abs(d - x)] + "0";
 				}
 				else if (y == 1 || y == 6)
 				{
-					piece = color + Constants.Pieces.PAWN + (x + 1).ToString();
+					piece = color + Constants.Pieces.PAWN + "0";
 				}
 				else
 				{
-					piece = Constants.Pieces.SPACE + Constants.Pieces.SPACE + Constants.Pieces.SPACE;
+					piece = Constants.Pieces.SPACE + Constants.Pieces.SPACE + "0";
 				}
 
 				board[y, x] = piece;
@@ -135,10 +126,13 @@ public class BoardManagement : MonoBehaviour
 	{
 		return piece.Substring(1, 1);
 	}
-
-	private int GetCount(string piece)
+	private string GetColorRank(string piece)
 	{
-		return int.Parse(piece.Substring(2, 1));
+		return GetColor(piece)+GetRank(piece);
+	}
+	private bool GetCount(string piece)
+	{
+		return piece.Substring(2, 1) == "0";
 	}
 
 	public bool PlayerCheck(int player, Vector2Int index)
@@ -656,8 +650,8 @@ public class BoardManagement : MonoBehaviour
 	public void Move(Vector2Int frm, Vector2Int to)
 	{
 		ResetPieceObject();
-		board[to.y, to.x] = board[frm.y, frm.x];
-		board[frm.y, frm.x] = Constants.Pieces.SPACE + Constants.Pieces.SPACE + Constants.Pieces.SPACE;
+		board[to.y, to.x] = GetColorRank(board[frm.y, frm.x])+"1";
+		board[frm.y, frm.x] = Constants.Pieces.SPACE + Constants.Pieces.SPACE + "0";
 		BoardPrint();
 		GeneratePiece();
 	}
