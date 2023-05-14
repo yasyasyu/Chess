@@ -532,6 +532,7 @@ public class BoardManagement : MonoBehaviour
 		{
 			flg = true;
 		}
+		// TODO add Pawn move
 		return flg;
 	}
 	private bool CheckPawn(Vector2Int frm)
@@ -547,11 +548,13 @@ public class BoardManagement : MonoBehaviour
 		{
 			direct *= -1;
 		}
+
 		Vector2Int to = frm + new Vector2Int(0, direct);
 		if (GetRank(board[to.y, to.x]) == Constants.Pieces.SPACE || GetColor(board[to.y, to.x]) != GetColor(board[frm.y, frm.x]))
 		{
 			flg = true;
 		}
+		// TODO add Pawn move
 		return flg;
 	}
 
