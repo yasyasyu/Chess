@@ -533,8 +533,8 @@ public class BoardManagement : MonoBehaviour
 		{
 			flg = true;
 		}
-		// TODO add Pawn move
 
+		// diagonal-move
 		string toColor = GetColor(board[to.y, to.x]);
 
 		if (frmColor == toColor || toColor == Constants.Pieces.SPACE)
@@ -574,9 +574,8 @@ public class BoardManagement : MonoBehaviour
 		{
 			flg = true;
 		}
-		// TODO add Pawn move
 
-
+		// diagonal-move
 		if (frmColor == toColor || toColor == Constants.Pieces.SPACE)
 		{
 			return flg;
